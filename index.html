@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>ShopFlow</title>
+  <link rel="stylesheet" href="style.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Sora:wght@300;400;500;600;700;800&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500&display=swap" rel="stylesheet" />
+  <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.js"></script>
+</head>
+<body>
+
+  <!-- ═══════════════ PAGE: LOGIN ════════════════════════════ -->
+  <div id="page-login" class="page active">
+    <div class="login-scene">
+      <div class="orb orb-a"></div>
+      <div class="orb orb-b"></div>
+      <div class="orb orb-c"></div>
+    </div>
+    <div class="login-card">
+      <div class="login-brand">
+        <div class="brand-logo">🛍️</div>
+        <h1>ShopFlow</h1>
+        <p>Enter your Customer ID to start shopping</p>
+      </div>
+      <form id="login-form" novalidate>
+        <div class="field">
+          <label for="cid-input">Customer ID</label>
+          <div class="input-row">
+            <i data-lucide="hash" class="fi"></i>
+            <input id="cid-input" type="text" placeholder="e.g. CUST-0042" autocomplete="off" spellcheck="false" />
+          </div>
+          <div class="field-msg" id="login-msg"></div>
+        </div>
+        <button class="btn btn-glow w100" type="submit" id="login-btn">
+          <span>Sign In</span>
+          <i data-lucide="arrow-right"></i>
+        </button>
+      </form>
+      <p class="login-note">
+        <i data-lucide="shield-check" style="width:13px;height:13px;vertical-align:middle;margin-right:4px"></i>
+        Customer IDs are issued by the admin only. Contact us if you need access.
+      </p>
+    </div>
+  </div>
+
+
+  <!-- ═══════════════ PAGE: SHOP ═════════════════════════════ -->
+  <div id="page-shop" class="page">
+    <header class="bar">
+      <div class="bar-l">
+        <span class="logo-mark">🛍️</span>
+        <span class="logo-text">ShopFlow</span>
+      </div>
+      <div class="bar-c">
+        <div class="sbox">
+          <i data-lucide="search" class="sbox-icon"></i>
+          <input type="text" id="search-input" placeholder="Search products…" />
+          <button id="search-clear" class="sbox-clear" style="display:none"><i data-lucide="x"></i></button>
+        </div>
+      </div>
+      <div class="bar-r">
+        <button class="ibtn" id="theme-toggle" title="Toggle theme"><i data-lucide="moon" id="theme-icon"></i></button>
+        <button class="ibtn cart-ibtn" id="cart-toggle" title="Cart">
+          <i data-lucide="shopping-bag"></i>
+          <span class="cbadge" id="cart-badge" style="display:none">0</span>
+        </button>
+        <div class="uchip">
+          <i data-lucide="user-circle"></i>
+          <span id="disp-cid">—</span>
+        </div>
+        <button class="ibtn" id="logout-btn" title="Logout"><i data-lucide="log-out"></i></button>
+      </div>
+    </header>
+
+    <div class="shop-wrap">
+      <main class="prod-section">
+        <div class="prod-header">
+          <div>
+            <h2>Our Products</h2>
+            <span class="prod-count" id="prod-count"></span>
+          </div>
+        </div>
+        <div class="prod-grid" id="prod-grid"></div>
+        <div id="no-results" class="empty-state" style="display:none">
+          <span style="font-size:3rem">📭</span>
+          <p>No products match your search</p>
+        </div>
+      </main>
+
+      <aside class="cart-panel" id="cart-panel">
+        <div class="cp-head">
+          <h3><i data-lucide="shopping-bag"></i>Cart</h3>
+          <button class="ibtn" id="cart-close"><i data-lucide="x"></i></button>
+        </div>
+        <div class="cp-body" id="cp-body">
+          <div class="cart-empty" id="cart-empty">
+            <span style="font-size:2.5rem">🛒</span>
+            <p>Your cart is empty</p>
+          </div>
+        </div>
+        <div class="cp-foot" id="cp-foot" style="display:none">
+          <div class="ctotal">
+            <span>Total</span>
+            <strong id="ctotal-val">$0.00</strong>
+          </div>
+          <button class="btn btn-glow w100" id="go-checkout-btn">
+            Checkout <i data-lucide="arrow-right"></i>
+          </button>
+        </div>
+      </aside>
+      <div class="cart-mask" id="cart-mask"></div>
+    </div>
+  </div>
+
+
+  <!-- ═══════════════ PAGE: CHECKOUT ═════════════════════════ -->
+  <div id="page-checkout" class="page">
+    <header class="bar">
+      <div class="bar-l">
+        <button class="ibtn" id="back-btn"><i data-lucide="arrow-left"></i></button>
+        <span class="logo-mark">🛍️</span>
+        <span class="logo-text">Checkout</span>
+      </div>
+      <div class="bar-r">
+        <div class="uchip">
+          <i data-lucide="user-circle"></i>
+          <span id="co-cid-bar">—</span>
+        </div>
+      </div>
+    </header>
+
+    <div class="co-layout">
+      <!-- Delivery Details -->
+      <div class="co-card">
+        <h3 class="co-sec-title"><i data-lucide="map-pin"></i>Delivery Details</h3>
+
+        <div class="field">
+          <label>Full Name <span class="req">*</span></label>
+          <div class="input-row">
+            <i data-lucide="user" class="fi"></i>
+            <input id="f-name" type="text" placeholder="Your full name" />
+          </div>
+        </div>
+
+        <div class="field">
+          <label>Contact / WhatsApp Number <span class="req">*</span></label>
+          <div class="input-row">
+            <i data-lucide="phone" class="fi"></i>
+            <input id="f-contact" type="tel" placeholder="+91 XXXXXXXXXX" />
+          </div>
+        </div>
+
+        <div class="field">
+          <label>Building / Flat / House Name <span class="req">*</span></label>
+          <div class="input-row">
+            <i data-lucide="building-2" class="fi"></i>
+            <input id="f-building" type="text" placeholder="e.g. Hostel Name, Room 304" />
+          </div>
+        </div>
+
+        <div class="field">
+          <label>Street / Area / Landmark</label>
+          <div class="input-row">
+            <i data-lucide="map" class="fi"></i>
+            <input id="f-area" type="text" placeholder="e.g. Campus- XX" />
+          </div>
+        </div>
+
+        <div class="field-msg err" id="addr-error" style="display:none">
+          <i data-lucide="alert-circle"></i> Please fill in all required fields marked with *.
+        </div>
+      </div>
+
+      <!-- Order Summary -->
+      <div class="co-card">
+        <h3 class="co-sec-title"><i data-lucide="receipt-text"></i>Order Summary</h3>
+        <div class="co-items" id="co-items"></div>
+        <div class="co-divider"></div>
+        <div class="co-meta">
+          <div class="meta-r">
+            <span><i data-lucide="hash"></i>Customer ID</span>
+            <strong id="co-cid">—</strong>
+          </div>
+          <div class="meta-r">
+            <span><i data-lucide="clock"></i>Order Time</span>
+            <strong id="co-time">—</strong>
+          </div>
+          <div class="meta-r meta-total">
+            <span>Grand Total</span>
+            <strong id="co-grand">$0.00</strong>
+          </div>
+        </div>
+        <button class="btn btn-glow w100" id="place-btn">
+          <i data-lucide="send"></i>
+          <span>Place My Order</span>
+        </button>
+        <div class="lbar" id="lbar" style="display:none">
+          <div class="lbar-fill"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+  <!-- ═══════════════ PAGE: THANK YOU ════════════════════════ -->
+  <div id="page-thankyou" class="page">
+    <div class="ty-wrap">
+      <div class="ty-card">
+        <div class="ty-anim">
+          <div class="ty-ring"></div>
+          <div class="ty-check">✓</div>
+        </div>
+        <h2 class="ty-title">Thank You, <span id="ty-name">Friend</span>! 🎉</h2>
+        <p class="ty-subtitle">Your order has been placed successfully.</p>
+
+        <div class="ty-eta">
+          <div class="eta-icon">⏱️</div>
+          <div class="eta-text">
+            <strong>Your order arrives in</strong>
+            <span class="eta-time">5 – 10 minutes</span>
+          </div>
+        </div>
+
+        <div class="ty-summary" id="ty-summary">
+          <!-- Filled by JS -->
+        </div>
+
+        <div class="ty-note">
+          <i data-lucide="bell-ring"></i>
+          Our team has been notified and is preparing your order right now!
+        </div>
+
+        <button class="btn btn-glow" id="ty-back-btn">
+          <i data-lucide="arrow-left"></i> Shop Again
+        </button>
+      </div>
+      <div id="confetti-wrap" class="confetti-wrap"></div>
+    </div>
+  </div>
+
+
+  <script src="script.js"></script>
+</body>
+</html>
